@@ -1,40 +1,24 @@
 function displayMetadata(dataSet) {
-  // Implement metadata display logic
-  // Iterate over dataSet elements and create .info-card divs for each
-  var rows = dataSet.uint16("x00280010"); // Rows
-  var columns = dataSet.uint16("x00280011"); // Columns
-  var numberOfFrames = dataSet.intString("x00280008"); // Number of Frames
-  var bitsAllocated = dataSet.uint16("x00280100"); // Bits Allocated
-  var samplesPerPixel = dataSet.uint16("x00280002"); // Samples per Pixel
-  var transferSyntax = dataSet.string("x00020010"); // Transfer Syntax
-  var compressed = transferSyntax !== "1.2.840.10008.1.2.1"; // Check for compression
-  var photometricInterpretation = dataSet.string("x00280004"); // Color Space
+  const infoDiv = document.getElementById("dicomInfo");
+  infoDiv.innerHTML = ""; // Clear previous data
 
-  var infoDiv = document.getElementById("dicomInfo");
-  infoDiv.innerHTML =
-    "Rows: " +
-    rows +
-    "<br>" +
-    "Columns: " +
-    columns +
-    "<br>" +
-    "Number of Frames: " +
-    numberOfFrames +
-    "<br>" +
-    "Bits Allocated: " +
-    bitsAllocated +
-    "<br>" +
-    "Samples Per Pixel: " +
-    samplesPerPixel +
-    "<br>" +
-    "Transfer Syntax: " +
-    transferSyntax +
-    "<br>" +
-    "Is Pixel Data Compressed: " +
-    (compressed ? "Yes" : "No") +
-    "<br>" +
-    "Color Space: " +
-    photometricInterpretation;
+  // Define the metadata fields to display
+  const metadataFields = [
+    { tag: "x00280010", name: "Rows" },
+    { tag: "x00280011", name: "Columns" },
+    { tag: "x00280008", name: "Number of Frames", defaultValue: "1" },
+    { tag: "x00280100", name: "Bits Allocated" },
+    { tag: "x00280002", name: "Samples Per Pixel" },
+    { tag: "x00020010", name: "Transfer Syntax" },
+    { tag: "x00280004", name: "Photometric Interpretation" },
+  ];
+
+  // Iterate over the metadata fields and create HTML content
+  metadataFields.forEach((field) => {
+    const value = dataSet.string(field.tag) || field.defaultValue || "N/A";
+    const content = `<div class="info-card"><p>${field.name}: ${value}</p></div>`;
+    infoDiv.innerHTML += content;
+  });
 }
 
 function readDICOMFile() {
