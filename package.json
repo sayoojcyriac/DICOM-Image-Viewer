@@ -1,0 +1,20 @@
+{
+  "name": "dicom-image-viewer",
+  "version": "1.0.0",
+  "description": "A simple application to read and render DICOM image",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cornerstone-core": "^2.6.1",
+    "cornerstone-tools": "^6.0.10",
+    "cornerstone-wado-image-loader": "^4.13.2",
+    "dicom-parser": "^1.8.21",
+    "express": "^4.18.2"
+  }
+}
