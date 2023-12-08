@@ -10,13 +10,19 @@
     <input type="file" id="dicomFile" accept=".dcm" />
 
     <!--<div id="dicomInfo"></div>-->
-    <div id="dicomTable">
-      <div class="dicom-table-header">
-        <span></span>
-        <span></span>
-      </div>
-      <!-- Metadata rows will be inserted here -->
+    <div class="table-section">
+      <div class="table-section-header">Instance Information</div>
+      <div id="instanceBasicInfo"></div>
     </div>
+    <div class="table-section">
+      <div class="table-section-header">Image Information</div>
+      <div id="imageInfo"></div>
+    </div>
+    <div class="table-section">
+      <div class="table-section-header">Pixel Data</div>
+      <div id="pixelDataInfo"></div>
+    </div>
+
     <div
       id="dicomImage"
       style="width: 512px; height: 512px; position: relative"

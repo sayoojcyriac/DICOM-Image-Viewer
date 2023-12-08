@@ -1,41 +1,56 @@
 function displayMetadata(dataSet) {
-  const table = document.getElementById("dicomTable");
-
-  // Remove existing rows except the header
-  while (table.children.length > 1) {
-    table.removeChild(table.lastChild);
-  }
-
-  // Define the metadata fields to display
-  const metadataFields = [
-    { tag: "x00280010", name: "Rows" },
-    { tag: "x00280011", name: "Columns" },
-    { tag: "x00280008", name: "Number of Frames", defaultValue: "1" },
-    { tag: "x00280100", name: "Bits Allocated" },
-    { tag: "x00280002", name: "Samples Per Pixel" },
-    { tag: "x00020010", name: "Transfer Syntax" },
-    { tag: "x00280004", name: "Photometric Interpretation" },
+  const instanceBasicInfoFields = [
+    { tag: "x0020000d", name: "StudyInstanceUID", type: "String" },
+    { tag: "x00080018", name: "SopInstanceUID", type: "String" },
+    { tag: "x00080016", name: "SopClassUID", type: "String" },
+    { tag: "x00080060", name: "Modality", type: "String" },
   ];
 
-  // Iterate over the metadata fields and create HTML content
-  metadataFields.forEach((field) => {
-    const value = dataSet.string(field.tag) || field.defaultValue || "N/A";
+  // Display Instance Basic Info
+  populateTableSection("instanceBasicInfo", dataSet, instanceBasicInfoFields);
+}
+
+function populateTableSection(sectionId, dataSet, fields) {
+  const sectionDiv = document.getElementById(sectionId);
+  sectionDiv.innerHTML = "";
+
+  fields.forEach((field) => {
+    let value = "N/A";
+
+    if (field.type === "String") {
+      let element = dataSet.elements[field.tag];
+      if (element !== undefined) {
+        let strValue = dataSet.string(field.tag);
+        if (strValue !== undefined) {
+          value = strValue;
+        }
+      }
+    } else if (field.type === "Uint") {
+      let element = dataSet.elements[field.tag];
+      if (element !== undefined) {
+        if (element.length === 2) {
+          value += dataSet.uint16(field.tag);
+        } else if (element.length === 4) {
+          value += dataSet.uint32(field.tag);
+        }
+      }
+    }
 
     const row = document.createElement("div");
     row.className = "dicom-table-row";
 
-    const cellTag = document.createElement("span");
+    const cellTag = document.createElement("div");
     cellTag.className = "dicom-table-cell";
     cellTag.textContent = field.name;
 
-    const cellValue = document.createElement("span");
+    const cellValue = document.createElement("div");
     cellValue.className = "dicom-table-cell";
     cellValue.textContent = value;
 
     row.appendChild(cellTag);
     row.appendChild(cellValue);
 
-    table.appendChild(row);
+    sectionDiv.appendChild(row);
   });
 }
 
