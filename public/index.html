@@ -10,7 +10,14 @@
     <input type="file" id="dicomFile" accept=".dcm" />
     <button onclick="readDICOMFile()">Read DICOM File</button>
 
-    <div id="dicomInfo"></div>
+    <!--<div id="dicomInfo"></div>-->
+    <div id="dicomTable">
+      <div class="dicom-table-header">
+        <span></span>
+        <span></span>
+      </div>
+      <!-- Metadata rows will be inserted here -->
+    </div>
     <div
       id="dicomImage"
       style="width: 512px; height: 512px; position: relative"
@@ -18,7 +25,7 @@
     <script src="/scripts/cornerstone.js"></script>
     <script src="/scripts/cornerstoneMath.js"></script>
     <script src="/scripts/cornerstoneTools.js"></script>
-    <script src="/scripts/cornerstoneWADOImageLoader.js"></script>
+    <script src="/scripts/cornerstoneWADOImageLoader.min.js"></script>
     <script src="/scripts/dicomParser.js"></script>
 
     <script src="/scripts/dicomReader.js"></script>

@@ -1,3 +1,30 @@
+function initializeCornerstone() {
+  // Configure cornerstoneWADOImageLoader
+  cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+  cornerstoneWADOImageLoader.webWorkerManager.initialize({
+    maxWebWorkers: navigator.hardwareConcurrency || 1,
+    startWebWorkersOnDemand: true,
+    webWorkerTaskPaths: [],
+    taskConfiguration: {
+      decodeTask: {
+        initializeCodecsOnStartup: true,
+        usePDFJS: false,
+      },
+    },
+  });
+
+  // Optional: Set up a function to handle any errors during image loading
+  cornerstone.events.addEventListener(
+    "cornerstoneimageloadfailed",
+    function (event) {
+      console.error(event.detail.error);
+    }
+  );
+}
+
+// Call this function when your application initializes
+initializeCornerstone();
+
 function renderDICOMImage(file) {
   const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
   const element = document.getElementById("dicomImage");

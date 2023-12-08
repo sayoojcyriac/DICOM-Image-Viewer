@@ -10,12 +10,19 @@ app.use(
 );
 app.use(
   "/scripts",
+  express.static(path.join(__dirname, "node_modules/cornerstone-math/dist"))
+);
+app.use(
+  "/scripts",
   express.static(path.join(__dirname, "node_modules/cornerstone-tools/dist"))
 );
 app.use(
   "/scripts",
   express.static(
-    path.join(__dirname, "node_modules/cornerstone-wado-image-loader/dist")
+    path.join(
+      __dirname,
+      "node_modules/cornerstone-wado-image-loader/dist/dynamic-import"
+    )
   )
 );
 app.use(

@@ -23,26 +23,57 @@ button:hover {
   background-color: #005f73;
 }
 
-#dicomInfo {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+#dicomTable {
+  border-collapse: collapse;
+  width: 100%;
   margin-top: 15px;
-}
-
-.info-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  display: block;
+  max-height: 400px; /* Adjust the height as needed */
   background-color: #fff;
   border-radius: 8px;
-  padding: 15px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
-.info-card p {
-  margin: 5px 0;
-  color: #555;
+.dicom-table-header {
+  display: grid;
+  grid-template-columns: minmax(auto, 1fr) minmax(auto, 2fr);
+  background-color: #004085;
+  color: white;
+  padding: 10px;
   font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.dicom-table-header .dicom-table-cell {
+  text-align: center;
+  border-right: 2px solid #005f73; /* Border to separate tag and value in the header */
+}
+
+.dicom-table-header .dicom-table-cell:last-child {
+  border-right: none; /* No border for the last cell */
+}
+
+.dicom-table-row {
+  display: grid;
+  grid-template-columns: minmax(auto, 1fr) minmax(auto, 2fr);
+  border-bottom: 1px solid #ddd;
+}
+
+.dicom-table-row:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+.dicom-table-cell {
+  padding: 10px;
+  overflow: hidden; /* Add this to handle overflowing content */
+  text-overflow: ellipsis; /* Add ellipsis for text overflow */
+  white-space: nowrap; /* Keep content on a single line */
+}
+
+.dicom-table-cell:first-child {
+  border-right: 2px solid #ccc; /* Border to separate tag and value */
 }
 
 #dicomImage {

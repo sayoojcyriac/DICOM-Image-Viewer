@@ -1,6 +1,10 @@
 function displayMetadata(dataSet) {
-  const infoDiv = document.getElementById("dicomInfo");
-  infoDiv.innerHTML = ""; // Clear previous data
+  const table = document.getElementById("dicomTable");
+
+  // Remove existing rows except the header
+  while (table.children.length > 1) {
+    table.removeChild(table.lastChild);
+  }
 
   // Define the metadata fields to display
   const metadataFields = [
@@ -16,8 +20,22 @@ function displayMetadata(dataSet) {
   // Iterate over the metadata fields and create HTML content
   metadataFields.forEach((field) => {
     const value = dataSet.string(field.tag) || field.defaultValue || "N/A";
-    const content = `<div class="info-card"><p>${field.name}: ${value}</p></div>`;
-    infoDiv.innerHTML += content;
+
+    const row = document.createElement("div");
+    row.className = "dicom-table-row";
+
+    const cellTag = document.createElement("span");
+    cellTag.className = "dicom-table-cell";
+    cellTag.textContent = field.name;
+
+    const cellValue = document.createElement("span");
+    cellValue.className = "dicom-table-cell";
+    cellValue.textContent = value;
+
+    row.appendChild(cellTag);
+    row.appendChild(cellValue);
+
+    table.appendChild(row);
   });
 }
 
