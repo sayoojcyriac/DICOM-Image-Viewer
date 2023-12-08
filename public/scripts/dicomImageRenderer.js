@@ -25,42 +25,25 @@ function initializeCornerstone() {
 // Call this function when your application initializes
 initializeCornerstone();
 
-function setupStackScroll(element, imageIds) {
-  // Initialize stack state
-  const stack = {
-    currentImageIdIndex: 0,
-    imageIds: imageIds,
-  };
-
-  cornerstoneTools.addStackStateManager(element, ["stack"]);
-  cornerstoneTools.addToolState(element, "stack", stack);
-
-  // Activate the stack scroll tool
-  cornerstoneTools.stackScroll.activate(element, 1); // 1 is the left mouse button
-  cornerstoneTools.stackScrollWheel.activate(element);
-}
-
 function renderDICOMImage(file) {
   const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
   const element = document.getElementById("dicomImage");
 
   cornerstone.enable(element);
+  // Initialize Cornerstone Tools
+  cornerstoneTools.init({
+    showSVGCursors: true,
+  });
 
   cornerstone
     .loadImage(imageId)
     .then(function (image) {
+      console.log(image);
       cornerstone.displayImage(element, image);
 
-      // Check if it's a multi-frame image
-      if (image.data.intString("x00280008")) {
-        const numFrames = image.data.intString("x00280008");
-        let imageIds = Array.from({ length: numFrames }, (_, i) =>
-          cornerstoneWADOImageLoader.wadouri.fileManager.add(file, i)
-        );
-
-        setupStackScroll(element, imageIds);
-
-        initializeScrollOnMouseMove(element);
+      const numFrames = image.data.intString("x00280008");
+      if (numFrames > 1) {
+        setupMultiFrame(element, imageId, numFrames);
       }
     })
     .catch(function (error) {
@@ -68,30 +51,21 @@ function renderDICOMImage(file) {
     });
 }
 
-function initializeScrollOnMouseMove(element) {
-  let lastY = 0;
-
-  element.addEventListener("mousemove", function (event) {
-    if (!event.buttons) {
-      return; // Only proceed if the mouse button is pressed
-    }
-
-    const deltaY = event.clientY - lastY;
-    lastY = event.clientY;
-
-    const stackState = cornerstoneTools.getToolState(element, "stack");
-    if (stackState) {
-      const stackData = stackState.data[0];
-      const newImageIdIndex =
-        stackData.currentImageIdIndex + (deltaY > 0 ? 1 : -1);
-
-      if (newImageIdIndex >= 0 && newImageIdIndex < stackData.imageIds.length) {
-        cornerstoneTools.scrollToIndex(element, newImageIdIndex);
-      }
-    }
+function setupMultiFrame(element, imageId, numFrames) {
+  // Create an array of imageIds for each frame
+  let imageIds = Array.from({ length: numFrames }, (_, index) => {
+    return imageId + "?frame=" + index;
   });
 
-  element.addEventListener("mousedown", function (event) {
-    lastY = event.clientY;
-  });
+  // Setup the stack
+  const stack = {
+    currentImageIdIndex: 0,
+    imageIds: imageIds,
+  };
+  cornerstoneTools.addStackStateManager(element, ["stack"]);
+  cornerstoneTools.addToolState(element, "stack", stack);
+
+  // Activate scroll tool
+  cornerstoneTools.stackScroll.activate(element, 1); // 1 is for left mouse button
+  cornerstoneTools.stackScrollWheel.activate(element);
 }
