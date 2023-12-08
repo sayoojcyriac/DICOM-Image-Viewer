@@ -35,6 +35,9 @@ function renderDICOMImage(file) {
     showSVGCursors: true,
   });
 
+  element.tabIndex = 0;
+  element.focus();
+
   cornerstone
     .loadImage(imageId)
     .then(function (image) {
@@ -66,6 +69,8 @@ function setupMultiFrame(element, imageId, numFrames) {
   cornerstoneTools.addToolState(element, "stack", stack);
 
   // Activate scroll tool
-  cornerstoneTools.stackScroll.activate(element, 1); // 1 is for left mouse button
-  cornerstoneTools.stackScrollWheel.activate(element);
+  const toolName = "StackScrollMouseWheel";
+  const apiTools = cornerstoneTools[`${toolName}Tool`];
+  cornerstoneTools.addTool(apiTool);
+  cornerstoneTools.setToolActive(toolName, { mouseButtonMask: 1 });
 }

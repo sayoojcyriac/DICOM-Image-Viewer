@@ -1,5 +1,5 @@
 body {
-  font-family: "Arial", sans-serif;
+  font-family: sans-serif, Helvetica, Arial;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
@@ -7,20 +7,6 @@ body {
 
 h1 {
   color: #333;
-}
-
-button {
-  background-color: #008cba;
-  color: white;
-  padding: 10px 15px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #005f73;
 }
 
 #dicomTable {
@@ -57,7 +43,7 @@ button:hover {
 
 .dicom-table-row {
   display: grid;
-  grid-template-columns: minmax(auto, 1fr) minmax(auto, 2fr);
+  grid-template-columns: 1fr 2fr;
   border-bottom: 1px solid #ddd;
 }
 
