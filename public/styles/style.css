@@ -6,61 +6,48 @@ body {
 }
 
 h1 {
-  color: #333;
+  text-align: center; /* Center-align the header */
+  margin-top: 20px; /* Add top margin for spacing */
+  margin-bottom: 20px; /* Add bottom margin for spacing */
+  color: black; /* Optional: color for the text */
+  font-size: 24px; /* Optional: adjust the font size as needed */
 }
 
-#dicomTable {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  display: block;
-  max-height: 400px; /* Adjust the height as needed */
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.parent-container {
+  margin: 20px;
+  padding: 15px;
+  background-color: #f9f9f9; /* Light background for the container */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #ddd; /* Subtle border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  max-width: 1000px; /* Adjust maximum width as needed */
+  margin: auto; /* Center the container */
 }
 
 .table-section {
-  margin-top: 20px;
-  padding: 15px;
+  /*margin-top: 20px;*/
+  margin: 20px, auto;
+  padding: 8px;
   background-color: #fff;
   border-radius: 8px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
 }
 
 .table-section-header {
   background-color: #004085;
   color: white;
-  padding: 10px;
+  padding: 8px;
+  font-size: 16px;
   border-radius: 5px 5px 0 0;
   font-weight: bold;
-}
-
-.dicom-table-header {
-  display: grid;
-  grid-template-columns: minmax(auto, 1fr) minmax(auto, 2fr);
-  background-color: #004085;
-  color: white;
-  padding: 10px;
-  font-weight: bold;
-  border-bottom: 2px solid #ddd;
-}
-
-.dicom-table-header .dicom-table-cell {
   text-align: center;
-  border-right: 2px solid #005f73; /* Border to separate tag and value in the header */
-}
-
-.dicom-table-header .dicom-table-cell:last-child {
-  border-right: none; /* No border for the last cell */
 }
 
 .dicom-table-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid #ddd;
 }
 
@@ -69,10 +56,11 @@ h1 {
 }
 
 .dicom-table-cell {
-  padding: 10px;
-  overflow: hidden; /* Add this to handle overflowing content */
-  text-overflow: ellipsis; /* Add ellipsis for text overflow */
-  white-space: nowrap; /* Keep content on a single line */
+  flex: 1 1 50%; /* Flex-grow, Flex-shrink, Flex-basis */
+  padding: 8px;
+  text-align: left;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 .dicom-table-cell:first-child {
@@ -80,18 +68,23 @@ h1 {
 }
 
 /* Responsive table layout for smaller screens */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
   .dicom-table-row {
-    grid-template-columns: 1fr; /* Stack the cells vertically on small screens */
+    flex-basis: 100%;
   }
 }
 
-#dicomImage {
-  border: 1px solid #ddd;
-  background-color: #000;
-  margin-top: 15px;
+.file-input-container {
+  text-align: center; /* Center-align the file input */
+  margin-bottom: 15px; /* Spacing between input and table-selection */
 }
 
-input[type="file"] {
-  margin: 10px 0;
+#dicomImage {
+  width: 100%; /* Full width within the container */
+  height: 512px; /* Fixed height or as per your requirement */
+  background-color: #eaeaea; /* Placeholder background */
+  margin-bottom: 5px; /* Spacing between image display and table sections */
+  margin-top: 10px;
+  border-radius: 5px; /* Rounded corners for the image container */
+  /* Additional styles as needed */
 }

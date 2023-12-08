@@ -10,31 +10,30 @@ function displayMetadata(dataSet) {
   populateTableSection("instanceBasicInfo", dataSet, instanceBasicInfoFields);
 }
 
+function getValue(dataSet, field) {
+  const element = dataSet.elements[field.tag];
+  if (!element) {
+    return "N/A";
+  }
+
+  switch (field.type) {
+    case "String":
+      return dataSet.string(field.tag) || "N/A";
+    case "Uint":
+      return element.length === 2
+        ? dataSet.uint16(field.tag)
+        : dataSet.uint32(field.tag);
+    default:
+      return "N/A";
+  }
+}
+
 function populateTableSection(sectionId, dataSet, fields) {
   const sectionDiv = document.getElementById(sectionId);
   sectionDiv.innerHTML = "";
 
   fields.forEach((field) => {
     let value = "N/A";
-
-    if (field.type === "String") {
-      let element = dataSet.elements[field.tag];
-      if (element !== undefined) {
-        let strValue = dataSet.string(field.tag);
-        if (strValue !== undefined) {
-          value = strValue;
-        }
-      }
-    } else if (field.type === "Uint") {
-      let element = dataSet.elements[field.tag];
-      if (element !== undefined) {
-        if (element.length === 2) {
-          value += dataSet.uint16(field.tag);
-        } else if (element.length === 4) {
-          value += dataSet.uint32(field.tag);
-        }
-      }
-    }
 
     const row = document.createElement("div");
     row.className = "dicom-table-row";
@@ -45,7 +44,7 @@ function populateTableSection(sectionId, dataSet, fields) {
 
     const cellValue = document.createElement("div");
     cellValue.className = "dicom-table-cell";
-    cellValue.textContent = value;
+    cellValue.textContent = getValue(dataSet, field);
 
     row.appendChild(cellTag);
     row.appendChild(cellValue);

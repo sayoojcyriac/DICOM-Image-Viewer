@@ -35,9 +35,6 @@ function renderDICOMImage(file) {
     showSVGCursors: true,
   });
 
-  element.tabIndex = 0;
-  element.focus();
-
   cornerstone
     .loadImage(imageId)
     .then(function (image) {
