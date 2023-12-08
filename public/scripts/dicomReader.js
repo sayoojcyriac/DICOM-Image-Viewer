@@ -8,12 +8,25 @@ function displayMetadata(dataSet) {
 
   // Display Instance Basic Info
   populateTableSection("instanceBasicInfo", dataSet, instanceBasicInfoFields);
+
+  const imageInfoFields = [
+    { tag: "x00280010", name: "Rows", type: "Uint" },
+    { tag: "x00280011", name: "Columns", type: "Uint" },
+    { tag: "x00280008", name: "Number of Frames", type: "Uint", default: 1 },
+    { tag: "x00280100", name: "Bits Allocated", type: "Uint" },
+    { tag: "x00280002", name: "Samples Per Pixel", type: "Uint" },
+    { tag: "x00020010", name: "Transfer Syntax UID", type: "String" },
+    { tag: "x00280004", name: "Photometric Interpretation", type: "String" },
+  ];
+
+  // Display Image Info
+  populateTableSection("imageInfo", dataSet, imageInfoFields);
 }
 
 function getValue(dataSet, field) {
   const element = dataSet.elements[field.tag];
   if (!element) {
-    return "N/A";
+    return field.default ? field.default : "N/A";
   }
 
   switch (field.type) {
