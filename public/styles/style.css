@@ -81,6 +81,7 @@ h1 {
 
 #dicomImage {
   width: 100%; /* Full width within the container */
+  /*width: 512px;*/
   height: 512px; /* Fixed height or as per your requirement */
   background-color: #eaeaea; /* Placeholder background */
   margin-bottom: 5px; /* Spacing between image display and table sections */
