@@ -12,7 +12,7 @@ function displayMetadata(dataSet) {
   const imageInfoFields = [
     { tag: "x00280010", name: "Rows", type: "Uint" },
     { tag: "x00280011", name: "Columns", type: "Uint" },
-    { tag: "x00280008", name: "Number of Frames", type: "Uint", default: 1 },
+    { tag: "x00280008", name: "Number of Frames", type: "String", default: 1 },
     { tag: "x00280100", name: "Bits Allocated", type: "Uint" },
     { tag: "x00280002", name: "Samples Per Pixel", type: "Uint" },
     { tag: "x00020010", name: "Transfer Syntax UID", type: "String" },

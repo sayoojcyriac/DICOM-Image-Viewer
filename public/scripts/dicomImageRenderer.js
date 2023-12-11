@@ -25,15 +25,21 @@ function initializeCornerstone() {
 // Call this function when your application initializes
 initializeCornerstone();
 
+let cornerStoneEnanbled = false;
+
 function renderDICOMImage(file) {
   const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
   const element = document.getElementById("dicomImage");
 
-  cornerstone.enable(element);
-  // Initialize Cornerstone Tools
-  cornerstoneTools.init({
-    showSVGCursors: true,
-  });
+  if (!cornerStoneEnanbled) {
+    cornerstone.enable(element);
+    // Initialize Cornerstone Tools
+    cornerstoneTools.init({
+      showSVGCursors: true,
+    });
+
+    cornerStoneEnanbled = true;
+  }
 
   cornerstone
     .loadImage(imageId)
