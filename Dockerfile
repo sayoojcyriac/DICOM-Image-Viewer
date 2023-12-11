@@ -1,24 +1,29 @@
-# Use an official Node runtime as a parent image
-FROM node:14
+# Stage 1: Building the application
+FROM node:16-alpine AS builder
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Set the working directory
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install any needed packages specified in package.json
-RUN npm install
+# Install only the production dependencies
+RUN npm install --only=production
 
-# Bundle app source inside Docker image
+# Copy the rest of your app's source code
 COPY . .
 
-# Make port 3000 available to the world outside this container
+# Stage 2: Setting up the production environment
+FROM node:16-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built application from the builder stage
+COPY --from=builder /app .
+
+# Expose the port the app runs on
 EXPOSE 3000
 
-
-# Define environment variable
-ENV NODE_ENV=production
-
-# Run server.js when the container launches
+# Command to run the application
 CMD ["node", "server.js"]
