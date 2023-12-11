@@ -67,7 +67,7 @@ function setupMultiFrame(element, imageId, numFrames) {
 
   // Activate scroll tool
   const toolName = "StackScrollMouseWheel";
-  const apiTools = cornerstoneTools[`${toolName}Tool`];
+  const apiTool = cornerstoneTools[`${toolName}Tool`];
   cornerstoneTools.addTool(apiTool);
   cornerstoneTools.setToolActive(toolName, { mouseButtonMask: 1 });
 }
