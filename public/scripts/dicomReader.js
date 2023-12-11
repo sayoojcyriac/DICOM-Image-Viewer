@@ -99,7 +99,7 @@ function displayPixelDataInsights(dataSet) {
   compressionStatus.className = "insight";
   compressionStatus.textContent = `Pixel Data is ${
     isCompressed ? "Compressed" : "Uncompressed"
-  } - But, double-check the TransferSyntax`;
+  } - Please confirm the TransferSyntaxUID with the standard.`;
   insightsDiv.appendChild(compressionStatus);
 
   // Get relevant attributes to compute expected pixel data length
@@ -124,14 +124,14 @@ function displayPixelDataInsights(dataSet) {
   // Expected Pixel Data Length
   const expectedLengthDiv = document.createElement("div");
   expectedLengthDiv.className = "insight";
-  expectedLengthDiv.textContent = `Expected Pixel Data Length: ${exptectedPixelDataLength} bytes`;
+  expectedLengthDiv.textContent = `Expected Pixel Data Length: ${exptectedPixelDataLength} bytes.`;
   insightsDiv.appendChild(expectedLengthDiv);
 
   // Raw Pixel Data Length
   const rawPixelDataLength = dataSet.elements.x7fe00010.length; // Raw data length
   const actualLengthDiv = document.createElement("div");
   actualLengthDiv.className = "insight";
-  actualLengthDiv.textContent = `Raw Pixel Data Length in DICOM: ${rawPixelDataLength} bytes`;
+  actualLengthDiv.textContent = `Raw Pixel Data Length in DICOM: ${rawPixelDataLength} bytes.`;
   insightsDiv.appendChild(actualLengthDiv);
 }
 
